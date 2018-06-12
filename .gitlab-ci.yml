@@ -1,0 +1,29 @@
+# Select image from https://hub.docker.com/_/php/
+image: php:7.1
+
+# Select what we should cache
+# cache:
+#   paths:
+#   - vendor/
+
+before_script:
+# Install git, the php image doesn't have installed
+- apt-get update -yqq
+- apt-get install git zlib1g-dev zip unzip -yqq
+
+# Install mysql-driver and xdebug
+- pecl install xdebug
+- docker-php-ext-enable xdebug
+- docker-php-ext-install zip
+
+# Install composer
+- curl -sS https://getcomposer.org/installer | php
+
+# Install all project dependencies
+- php composer.phar install --prefer-dist
+
+# Codeveption API and Unit
+test:php7:
+  image: php:7.1
+  script:
+  - vendor/bin/phpunit --coverage-text --colors=never --stop-on-failure
