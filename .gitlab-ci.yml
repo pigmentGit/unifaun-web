@@ -9,7 +9,7 @@ image: php:7.1
 before_script:
 # Install git, the php image doesn't have installed
 - apt-get update -yqq
-- apt-get install git zlib1g-dev zip unzip -yqq
+- apt-get install git zlib1g-dev zip unzip libxml2-dev -yqq
 
 # Install mysql-driver and xdebug
 - pecl install xdebug
