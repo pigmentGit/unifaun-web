@@ -1,0 +1,130 @@
+{
+    "result": {
+        "consignments": {
+            "Part": [{
+                "Address": {
+                    "id": "181818",
+                    "name": "Infab",
+                    "address": "Barbackagatan 2",
+                    "postcode": "29132",
+                    "city": "Kristianstad",
+                    "countrycode": "SE",
+                    "posX": 0,
+                    "posY": 0,
+                    "posSystem": "RT90"
+                },
+                "Communication": {
+                    "contactPerson": "Albin N",
+                    "phone": "0733228083",
+                    "mobile": {
+                        "_": "0733228083",
+                        "notify": false
+                    },
+                    "email": {
+                        "_": "albin@infab.io",
+                        "notify": false
+                    }
+                },
+                "Reference": {},
+                "role": "consignee"
+            }, {
+                "Address": {
+                    "id": "VCHAIN_TEST",
+                    "name": "VCHAIN_TEST",
+                    "address": "Skruvgatan 5, Box 20150",
+                    "postcode": "21124",
+                    "city": "Malm\u00f6",
+                    "countrycode": "SE",
+                    "posX": 0,
+                    "posY": 0,
+                    "posSystem": "RT90"
+                },
+                "Communication": {
+                    "contactPerson": "Nils Johan T\u00f6rnstr\u00f6m",
+                    "phone": "727307430",
+                    "mobile": {
+                        "_": "+46727307430",
+                        "notify": false
+                    },
+                    "email": {
+                        "_": "njt@vchain.se",
+                        "notify": false
+                    }
+                },
+                "Reference": {},
+                "role": "consignor",
+                "account": "vChain"
+            }],
+            "GoodsItem": [{
+                "noOfPackages": 1,
+                "weight": 10,
+                "volume": 0.75,
+                "length": 0,
+                "width": 0,
+                "height": 0,
+                "loadingMetres": 0,
+                "palletSpace": 0,
+                "packageType": "BX",
+                "goodsType": "Elektronik",
+                "netWeight": 0,
+                "weightUnit": "kg",
+                "volumeUnit": "m3",
+                "lengthUnit": "cm",
+                "stackable": false,
+                "PackageIds": {
+                    "code": "373323997883183421"
+                }
+            }, {
+                "noOfPackages": 1,
+                "weight": 10,
+                "volume": 0.75,
+                "length": 0,
+                "width": 0,
+                "height": 0,
+                "loadingMetres": 0,
+                "palletSpace": 0,
+                "packageType": "BX",
+                "goodsType": "Elektronik",
+                "netWeight": 0,
+                "weightUnit": "kg",
+                "volumeUnit": "m3",
+                "lengthUnit": "cm",
+                "stackable": false,
+                "PackageIds": {
+                    "code": "373323997883183438"
+                }
+            }],
+            "TransportProduct": {
+                "code": "vchainnormal",
+                "PaymentInstruction": {
+                    "value": "P"
+                },
+                "AddService": [{
+                    "value": "vchainnormal"
+                }, {}, {}],
+                "advice": false,
+                "Tod": {
+                    "combiterm": "CFR"
+                },
+                "Pickup": {
+                    "date": "2018-06-12T00:00:00.000+02:00",
+                    "earliest": "2018-06-12T00:45:00.000+02:00",
+                    "latest": "2018-06-12T01:00:00.000+02:00",
+                    "instruction": ["Testad h\u00e4mtningsinstruktion", null, null, null, null]
+                },
+                "Transport": {
+                    "tempLow": 0,
+                    "tempHigh": 0,
+                    "valuableGoods": false,
+                    "carryIn": false,
+                    "extraCrew": false,
+                    "eurPallets": 0
+                }
+            },
+            "consignmentId": "1528808763626bcdb401a",
+            "consignmentNo": "0013988647"
+        },
+        "receipt": null,
+        "statusCode": 0
+    }
+}
