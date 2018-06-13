@@ -83,4 +83,76 @@ class UnifaunTest extends TestCase
         $this->assertInstanceOf(Collection::class, $response);
         $this->assertEquals('Infab', $response->first()['consignments']['Part'][0]['Address']['name']);
     }
+
+    /** @test **/
+    public function it_can_get_a_consignment_by_id()
+    {
+        // Arrange
+        
+        $expectedArguments = [
+            'ConsignmentResult',
+            'findByConsignmentId',
+            [['key' => 'consignmentId', 'value' => '1528808552694f191f478']]
+        ];
+
+        $this->unifaunClient
+            ->shouldReceive('performQuery')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn([
+                'result' => [
+                    'consignments' => [
+                        'Part' => [
+                            0 => [
+                                'Address' => [
+                                    'id' => '181818',
+                                    'name' => 'Infab'
+                                ],
+                                'Communication' => [
+                                    'contactPerson' => 'Albin N',
+                                    'phone' => '0733228083'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]);
+        
+        $response = $this->unifaun->findByConsignmentId('1528808552694f191f478');
+        
+        // Assert
+        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertEquals('Infab', $response->first()['consignments']['Part'][0]['Address']['name']);
+    }
+
+    /** @test **/
+    public function it_can_find_a_package_via_package_id()
+    {
+        $expectedArguments = [
+            'ConsignmentResult',
+            'findByPackageId',
+            [['key' => 'packageId', 'value' => '373323997883182561']]
+        ];
+        $this->unifaunClient
+            ->shouldReceive('performQuery')->withArgs($expectedArguments)
+            ->once()
+            ->andReturn([
+                'result' => [
+                    'consignments' => [
+                        'Part' => [
+                            0 => [
+                                'Address' => [
+                                    'id' => '181818',
+                                    'name' => 'Infab'
+                                ]
+                            ]
+                        ]
+                    ]
+                ]
+            ]);
+    
+        $response = $this->unifaun->findByPackageId('373323997883182561');
+        
+        // Assert
+        $this->assertInstanceOf(Collection::class, $response);
+    }
 }
