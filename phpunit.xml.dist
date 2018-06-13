@@ -28,5 +28,9 @@
     <php>
         <env name="DB_CONNECTION" value="testing"/>
         <env name="APP_ENV" value="testing"/>
+        <env name="UNIFAUN_USER" value=""/>
+        <env name="UNIFAUN_GROUP_NAME" value=""/>
+        <env name="UNIFAUN_PASSWORD" value=""/>
+        <env name="UNIFAUN_WSDL" value="https://service.apport.net:443/ws/services/ConsignmentWS?wsdl"/>
     </php>
 </phpunit>
