@@ -16,15 +16,24 @@ class UnifaunClient
         $this->soapWrapper = $soapWrapper;
     }
 
-    public function performQuery($group, $name)
+    public function performQuery($group, $method, $params = null)
     {
-        $this->soapWrapper->add('ConsignmentResult', function ($service) {
-            $service
-              ->wsdl('https://service.apport.net:443/ws/services/ConsignmentWS?wsdl')
-              ->trace(true);
+        $rootObject = new \stdClass;
+        $rootObject->AuthenticationToken = $this->getAuthToken();
+        if($params) {
+            foreach($params as $param) {
+                $keyName = $param['key'];
+                $rootObject->$keyName = $param['value'];
+            }
+        }
+
+        $this->soapWrapper->add($group, function ($service) {
+            $service->wsdl('https://service.apport.net:443/ws/services/ConsignmentWS?wsdl')
+                ->trace(true);
         });
-        $response = $this->soapWrapper->call($group . '.' . $name, [
-            $this->getAuthToken()
+
+        $response = $this->soapWrapper->call($group . '.' . $method, [
+            $rootObject
         ]);
 
         return $response;
@@ -33,14 +42,10 @@ class UnifaunClient
     protected function getAuthToken()
     {
         $loginData = new \stdClass();
-        $loginData->userName = 'wsint';
-        $loginData->groupName = 'vchain_test';
-        $loginData->password = '!ntegration';
+        $loginData->userName = config('services.unifaun.user_name');
+        $loginData->groupName = config('services.unifaun.group_name');
+        $loginData->password = config('services.unifaun.password');
 
-        $Login = new \stdClass();
-        $Login->AuthenticationToken = $loginData;
-
-        return $Login;
+        return $loginData;
     }
-
 }
