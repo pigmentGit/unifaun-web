@@ -22,12 +22,26 @@ class Unifaun
     public function getConsignmentTemplates(): Collection
     {
         $response = $this->performQuery('ConsignmentResult','getConsignmentTemplates');
-        
+
         return collect($response);
     }
 
-    public function performQuery($group, $name)
+    public function findByConsignmentNo($id)
     {
-        return $this->client->performQuery($group, $name);
+        $response = $this->performQuery(
+            'ConsignmentResult',
+            'findByConsignmentNo',
+            [
+                ['key' => 'consignmentNo',
+                'value' => $id]
+            ]
+        );
+
+        return collect($response);
+    }
+
+    public function performQuery($group, $method, $params = null)
+    {
+        return $this->client->performQuery($group, $method, $params);
     }
 }
