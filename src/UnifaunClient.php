@@ -16,19 +16,25 @@ class UnifaunClient
         $this->soapWrapper = $soapWrapper;
     }
 
-    public function performQuery($group, $method, $params = null)
+    public function performRequest($group, $method, $params = null)
     {
         $rootObject = new \stdClass;
         $rootObject->AuthenticationToken = $this->getAuthToken();
         if($params) {
             foreach($params as $param) {
-                $keyName = $param['key'];
-                $rootObject->$keyName = $param['value'];
+                if(isset($param[0]['key'])) {
+                    foreach($param as $pop) {
+                        $keyName = $pop['key'];
+                        $rootObject->$keyName = $pop['value'];
+                    }
+                } else {
+                    $keyName = $param['key'];
+                    $rootObject->$keyName = $param['value'];
+                }
             }
         }
-
-        $this->soapWrapper->add($group, function ($service) {
-            $service->wsdl('https://service.apport.net:443/ws/services/ConsignmentWS?wsdl')
+        $this->soapWrapper->add($group, function ($service) use ($unifaun) {
+            $service->wsdl(config('services.unifaun.wsdl'))
                 ->trace(true);
         });
 
@@ -38,6 +44,7 @@ class UnifaunClient
 
         return $response;
     }
+
 
     protected function getAuthToken()
     {

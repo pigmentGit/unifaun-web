@@ -24,7 +24,16 @@
         }
     },
     "autoload-dev": {
-        "psr-4": {"Infab\\UnifaunWebTa\\Test\\": "tests"}
+        "psr-4": {
+            "Infab\\UnifaunWebTa\\Test\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Infab\\UnifaunWebTa\\UnifaunWebTaServiceProvider"
+            ]
+        }
     },
     "prefer-stable": true,
     "minimum-stability": "dev",

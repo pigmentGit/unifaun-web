@@ -17,7 +17,7 @@ class UnifaunWebTaServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(Unifaun::class, function () {
-            $analyticsConfig = config('analytics');
+            $unifaunConfig = config('services.unifaun');
             $client = app(UnifaunClient::class);
 
             return new Unifaun($client);
