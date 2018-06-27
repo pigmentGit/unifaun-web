@@ -6,6 +6,11 @@ use Orchestra\Testbench\TestCase as Orchestra;
 
 abstract class TestCase extends Orchestra
 {
+    public function setUp()
+    {
+        parent::setUp();
+    }
+
     /**
      * @param \Illuminate\Foundation\Application $app
      *
@@ -17,4 +22,16 @@ abstract class TestCase extends Orchestra
             \Infab\UnifaunWebTa\UnifaunWebTaServiceProvider::class,
         ];
     }
+
+    /**
+     * @param \Illuminate\Foundation\Application $app
+     *
+     * @return array
+     */
+    // protected function getPackageAliases($app)
+    // {
+    //     return [
+    //         'Unifaun' => \Infab\UnifaunWebTa\UnifaunFacade::class,
+    //     ];
+    // }
 }
