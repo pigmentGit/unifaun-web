@@ -7,12 +7,12 @@ use Illuminate\Support\Traits\Macroable;
 
 class Unifaun
 {
-    use Macroable; 
+    use Macroable;
 
     protected $client;
 
     protected $bookingData;
-    
+
     protected $goods = [];
 
     protected $consignmentParts = [];
@@ -37,7 +37,7 @@ class Unifaun
             'goods' => $this->goods,
             'consignmentParts' => $this->consignmentParts,
             'transportProduct' => $this->transportProduct,
-            'transportServices' => $this->transportServices
+            // 'transportServices' => $this->transportServices
         ];
     }
 
@@ -125,10 +125,10 @@ class Unifaun
 
     public function makeBooking()
     {
-        $bookingItem = new \stdClass;
+        $bookingItem = new \stdClass();
         // $goodsItems = $this->getGoods();
 
-        $bookingItem->templateName = 'vchain';
+        $bookingItem->templateName = 'Package';
         $bookingItem->orderNo = $this->bookingData['orderNo'];
         $bookingItem->GoodsItem = $this->getGoods();
         $bookingItem->Part = $this->getParts();
@@ -151,10 +151,10 @@ class Unifaun
         return collect($response);
     }
 
-    public function getGoods() : array
+    public function getGoods(): array
     {
         $goods = [];
-        foreach($this->goods as $item) {
+        foreach ($this->goods as $item) {
             $xml  = "<GoodsItem xmlns:v1=\"http://www.spedpoint.com/consignment/types/v1_0\">";
             $xml .= "<v1:noOfPackages>{$item['packages']}</v1:noOfPackages>";
             $xml .= "<v1:weight>{$item['weight']}</v1:weight>";
@@ -167,11 +167,11 @@ class Unifaun
     }
 
 
-    public function getParts() : array
+    public function getParts(): array
     {
         $parts = [];
-        foreach($this->consignmentParts as $item) {
-            $part = new \stdClass;
+        foreach ($this->consignmentParts as $item) {
+            $part = new \stdClass();
             $part->role = $item['role'];
             $part->Address = $this->getAddress($item);
             array_push($parts, $part);
@@ -184,14 +184,21 @@ class Unifaun
     {
         $random = str_random(8);
         $xml  = "<Address xmlns:v1=\"http://www.spedpoint.com/consignment/types/v1_0\">";
-        $xml .= "<v1:id>44</v1:id>";
+        $xml .= "<v1:id>{$part['id']}</v1:id>";
         $xml .= "<v1:name>{$part['name']}</v1:name>";
         $xml .= "<v1:address>{$part['address']}</v1:address>";
         $xml .= "<v1:postcode>{$part['postcode']}</v1:postcode>";
         $xml .= "<v1:city>{$part['city']}</v1:city>";
         $xml .= "<v1:countrycode>{$part['country_code']}</v1:countrycode>";
         $xml .= "</Address>";
-                
+        if (isset($part['communication'])) {
+            $xml .= "<Communication xmlns:v1=\"http://www.spedpoint.com/consignment/types/v1_0\">";
+            $xml .= "<v1:contactPerson>{$part['communication']['contact_person']}</v1:contactPerson>";
+            $xml .= "<v1:phone>{$part['communication']['phone']}</v1:phone>";
+            $xml .= "<email notify='false'>{$part['communication']['email']}</email>";
+            $xml .= "</Communication>";
+        }
+
         $address  = new \SoapVar($xml, XSD_ANYXML);
 
         return $address;
@@ -199,17 +206,17 @@ class Unifaun
 
     public function getTransportProduct()
     {
-        $transportProduct = new \stdClass;
-        $transportValue = new \stdClass;
-        $addService = new \stdClass;
-        $advice = new \stdClass;
+        $transportProduct = new \stdClass();
+        $transportValue = new \stdClass();
+        $addService = new \stdClass();
+        $advice = new \stdClass();
         $advice->value = true;
-        $addService->value = "vchainnormal";
+        // $addService->value = "vchainnormal";
         $transportValue->value = "P";
         // dd($transportValue);
         $transportProduct->PaymentInstruction = $transportValue;
         $transportProduct->advice = $advice;
-        $transportProduct->AddService = $addService; 
+        // $transportProduct->AddService = $addService;
 
         return $transportProduct;
     }

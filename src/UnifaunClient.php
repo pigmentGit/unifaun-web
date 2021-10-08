@@ -18,12 +18,12 @@ class UnifaunClient
 
     public function performRequest($group, $method, $params = null)
     {
-        $rootObject = new \stdClass;
+        $rootObject = new \stdClass();
         $rootObject->AuthenticationToken = $this->getAuthToken();
-        if($params) {
-            foreach($params as $param) {
-                if(isset($param[0]['key'])) {
-                    foreach($param as $pop) {
+        if ($params) {
+            foreach ($params as $param) {
+                if (isset($param[0]['key'])) {
+                    foreach ($param as $pop) {
                         $keyName = $pop['key'];
                         $rootObject->$keyName = $pop['value'];
                     }
@@ -33,7 +33,7 @@ class UnifaunClient
                 }
             }
         }
-        $this->soapWrapper->add($group, function ($service) use ($unifaun) {
+        $this->soapWrapper->add($group, function ($service) {
             $service->wsdl(config('services.unifaun.wsdl'))
                 ->trace(true);
         });
