@@ -1,12 +1,18 @@
 {
-    "name": "infab/unifaun-web-ta",
+    "name": "writeshh/unifaun-web-ta",
     "description": "Package for communucating with Unifaun Web Ta",
     "type": "library",
     "license": "proprietary",
-    "authors": [{
-        "name": "Albin N",
-        "email": "albin.nilsson89@gmail.com"
-    }],
+    "authors": [
+		{
+			"name": "Ritesh Shrestha",
+			"email": "shrestha.ritesh@hotmail.com"
+		},
+		{
+			"name": "Albin N",
+			"email": "albin.nilsson89@gmail.com"
+		}
+	],
     "require": {
         "php": "^7.1.3",
         "ext-soap": "*",
