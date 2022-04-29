@@ -34,7 +34,7 @@ class UnifaunClient
             }
         }
         $this->soapWrapper->add($group, function ($service) {
-            $service->wsdl(config('services.unifaun.wsdl'))
+            $service->wsdl($this->config['wsdl'])
                 ->trace(true);
         });
 
@@ -49,9 +49,9 @@ class UnifaunClient
     protected function getAuthToken()
     {
         $loginData = new \stdClass();
-        $loginData->userName = config('services.unifaun.user_name');
-        $loginData->groupName = config('services.unifaun.group_name');
-        $loginData->password = config('services.unifaun.password');
+        $loginData->userName = $this->config['user_name'];
+        $loginData->groupName = $this->config['group_name'];
+        $loginData->password = $this->config['password'];
 
         return $loginData;
     }
