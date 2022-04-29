@@ -2,6 +2,7 @@
 
 namespace Infab\UnifaunWebTa;
 
+use Illuminate\Support\Str;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Macroable;
 
@@ -187,7 +188,7 @@ class Unifaun
 
     protected function getAddress($part)
     {
-        $random = str_random(8);
+        $random = Str::random(8);
         $xml  = "<Address xmlns:v1=\"http://www.spedpoint.com/consignment/types/v1_0\">";
         $xml .= "<v1:id>{$part['id']}</v1:id>";
         $xml .= "<v1:name>{$part['name']}</v1:name>";
@@ -223,7 +224,6 @@ class Unifaun
         $advice->value = true;
         // $addService->value = "vchainnormal";
         $transportValue->value = "P";
-        // dd($transportValue);
         $transportProduct->PaymentInstruction = $transportValue;
         $transportProduct->advice = $advice;
         // $transportProduct->AddService = $addService;
