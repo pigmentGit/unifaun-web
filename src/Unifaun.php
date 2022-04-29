@@ -76,7 +76,7 @@ class Unifaun
 
     public function getConsignmentTemplates(): Collection
     {
-        $response = $this->performRequest('ConsignmentResult', 'getConsignmentTemplates');
+        $response = $this->performQuery('ConsignmentResult', 'getConsignmentTemplates');
 
         return collect($response);
     }
@@ -87,8 +87,10 @@ class Unifaun
             'ConsignmentResult',
             'findByConsignmentNo',
             [
-                ['key' => 'consignmentNo',
-                'value' => $id]
+                [
+                    'key' => 'consignmentNo',
+                    'value' => $id
+                ]
             ]
         );
 
@@ -101,8 +103,10 @@ class Unifaun
             'ConsignmentResult',
             'findByConsignmentId',
             [
-                ['key' => 'consignmentId',
-                'value' => $id]
+                [
+                    'key' => 'consignmentId',
+                    'value' => $id
+                ]
             ]
         );
 
@@ -115,8 +119,10 @@ class Unifaun
             'ConsignmentResult',
             'findByPackageId',
             [
-                ['key' => 'packageId',
-                'value' => $id]
+                [
+                    'key' => 'packageId',
+                    'value' => $id
+                ]
             ]
         );
 
@@ -128,7 +134,7 @@ class Unifaun
         $bookingItem = new \stdClass();
         // $goodsItems = $this->getGoods();
 
-        $bookingItem->templateName = 'Package';
+        $bookingItem->templateName = $this->bookingData['templateName'];
         $bookingItem->orderNo = $this->bookingData['orderNo'];
         $bookingItem->GoodsItem = $this->getGoods();
         $bookingItem->Part = $this->getParts();
@@ -147,7 +153,6 @@ class Unifaun
                 ]
             ]
         );
-
         return collect($response);
     }
 
@@ -195,6 +200,11 @@ class Unifaun
             $xml .= "<Communication xmlns:v1=\"http://www.spedpoint.com/consignment/types/v1_0\">";
             $xml .= "<v1:contactPerson>{$part['communication']['contact_person']}</v1:contactPerson>";
             $xml .= "<v1:phone>{$part['communication']['phone']}</v1:phone>";
+            if (is_numeric($part['id'])) {
+                $xml .= "<mobile notify='true'>{$part['communication']['phone']}</mobile>";
+            } else {
+                $xml .= "<v1:mobile>{$part['communication']['phone']}</v1:mobile>";
+            }
             $xml .= "<email notify='false'>{$part['communication']['email']}</email>";
             $xml .= "</Communication>";
         }
