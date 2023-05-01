@@ -9,8 +9,8 @@ class UnifaunWebTaServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/services.php', 'services');
-     
+        $this->mergeConfigFrom(__DIR__ . '/../config/services.php', 'services');
+
         $this->app->bind(UnifaunClient::class, function () {
             $unifaunConfig = config('services.unifaun');
             return new UnifaunClient(new SoapWrapper, $unifaunConfig);
